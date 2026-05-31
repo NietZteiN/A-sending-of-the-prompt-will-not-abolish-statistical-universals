@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fire Harp Electric — a throw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1eadc;
+    --ink:#15110b;
+    --ink-soft:#4f463a;
+    --reflect:#a99c84;      /* the Japanese: a shadow cast across the field */
+    --ember:#9a2f22;        /* the flame, used almost never */
+    --rule:#cfc3aa;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Cormorant Garamond","Garamond",Georgia,serif;
+    line-height:1.28;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    /* faint paper grain */
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(120,100,70,.04), transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(90,70,40,.04), transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  .page{
+    max-width:1180px;
+    margin:0 auto;
+    padding:9vh 7vw 16vh;
+  }
+
+  /* ---- registers ---- */
+  .throw{
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:.10em;
+    line-height:1.02;
+    font-size:clamp(2.6rem,8.4vw,6.6rem);
+    color:var(--ink);
+  }
+  .sub{
+    font-size:clamp(1.5rem,4vw,2.9rem);
+    font-weight:500;
+    letter-spacing:.02em;
+    line-height:1.08;
+  }
+  .line{
+    font-size:clamp(1.05rem,2.5vw,1.7rem);
+    color:var(--ink-soft);
+    max-width:34ch;
+  }
+  .small{
+    font-size:clamp(.95rem,2vw,1.3rem);
+    color:var(--ink-soft);
+    max-width:38ch;
+  }
+  .aside{
+    font-style:italic;
+    font-size:clamp(.85rem,1.7vw,1.12rem);
+    color:#6f6453;
+    max-width:42ch;
+    line-height:1.4;
+  }
+  .ember{color:var(--ember);}
+
+  /* the reflection: japanese */
+  .jp{
+    font-family:"Shippori Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+    color:var(--reflect);
+    font-weight:400;
+    line-height:1.55;
+    letter-spacing:.04em;
+    font-size:clamp(.82rem,1.7vw,1.05rem);
+    max-width:40ch;
+  }
+  .jp.big{font-size:clamp(1rem,2.2vw,1.4rem);}
+
+  .vert{
+    writing-mode:vertical-rl;
+    text-orientation:upright;
+    letter-spacing:.18em;
+    line-height:1.7;
+  }
+
+  /* ---- spreads: each a field of white ---- */
+  .spread{
+    position:relative;
+    min-height:74vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:7vh 0;
+  }
+
+  /* horizontal drift */
+  .l{margin-right:auto;text-align:left;}
+  .c{margin-left:auto;margin-right:auto;text-align:center;}
+  .r{margin-left:auto;text-align:right;}
+  .x1{margin-left:6%;}
+  .x2{margin-left:22%;}
+  .x3{margin-left:40%;}
+  .x4{margin-left:56%;}
+  .pull{margin-left:-2%;}
+
+  .gap-s{margin-top:.6rem;}
+  .gap-m{margin-top:2.2rem;}
+  .gap-l{margin-top:4.5rem;}
+  .gap-xl{margin-top:7rem;}
+
+  /* reveal on scroll */
+  .r-up{opacity:0;transform:translateY(16px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1);}
+  .r-up.vis{opacity:1;transform:none;}
+
+  /* opening colophon */
+  .colophon-top{
+    text-align:center;
+    color:var(--ink-soft);
+    margin-bottom:14vh;
+  }
+  .colophon-top .t1{
+    font-size:clamp(1.3rem,3.2vw,2.1rem);
+    letter-spacing:.06em;
+    font-weight:500;
+  }
+  .colophon-top .t2{
+    font-family:"Shippori Mincho",serif;
+    color:var(--reflect);
+    letter-spacing:.18em;
+    margin-top:.5rem;
+    font-size:clamp(.9rem,2vw,1.2rem);
+  }
+  .colophon-top .t3{
+    font-style:italic;
+    font-size:.95rem;
+    margin-top:2.2rem;
+    color:#7a6e5b;
+    letter-spacing:.02em;
+  }
+  .rule{
+    width:60px;height:1px;background:var(--rule);
+    margin:1.6rem auto 0;
+  }
+
+  /* closing imprint */
+  .imprint{
+    margin-top:20vh;
+    text-align:center;
+    font-style:italic;
+    font-size:.86rem;
+    color:#8a7e6b;
+    letter-spacing:.02em;
+    line-height:1.7;
+  }
+  .imprint .ref{font-style:normal;color:#6f6453;}
+
+  @media (max-width:680px){
+    .x2{margin-left:10%;}
+    .x3{margin-left:14%;}
+    .x4{margin-left:20%;}
+    .line,.small,.aside,.jp{max-width:90%;}
+    .spread{min-height:62vh;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- title / colophon -->
+  <div class="colophon-top">
+    <div class="t1">A THEORY OF EDITING</div>
+    <div class="t1" style="font-style:italic;text-transform:none;letter-spacing:.02em;">the fire harp electric</div>
+    <div class="t2">編集の理論 ― 火の竪琴、電気なるもの</div>
+    <div class="t3">a throw &nbsp;·&nbsp; after Mallarmé</div>
+    <div class="rule"></div>
+  </div>
+
+  <!-- SPREAD 1 : the throw begins -->
+  <section class="spread">
+    <div class="throw l r-up">What is&nbsp;art</div>
+    <div class="line x2 gap-m r-up">Activation steering in an LLM is non-surjective: the manifold of thought — prompt, which lives in the discrete space of language, mapped into the manifold of activation space —</div>
+    <div class="jp x2 gap-s r-up">大規模言語モデルにおける活性化の操舵は非全射である。思考の多様体――言語という離散的な空間に在るプロンプトが、活性空間の多様体へと写像されたもの――</div>
+    <div class="sub x3 gap-l r-up">but a non&#8209;surjective</div>
+    <div class="line x1 gap-m r-up">when steered, is steered outside that manifold, and from whence it came we cannot translate it back.</div>
+    <div class="jp x1 gap-s r-up">ひとたび操舵されると、その多様体の外へと押し出され、それがどこから来たのか、もはや訳し戻すことはできない。</div>
+    <div class="throw r gap-l r-up"><span class="ember">flame</span><span style="color:var(--ink);">?</span></div>
+
+    <!-- the professor's heckle, set small as a footnote-voice -->
+    <div class="aside x3 gap-xl r-up">— Hold on. My advisor is clearing his throat. He says this is all very pretty, but the result is not <em>yours</em>, it is <em>theirs</em>, and we must cite it. Mishra, Khashabi &amp; Liu, “Steered LLM Activations are Non-Surjective,” arXiv:2604.09839 (2026). They proved the flame, my dear; you only sang it. Cite the paper. Mention it. &nbsp;— Yes, Professor.</div>
+    <div class="jp aside x3 gap-s r-up" style="font-style:normal;">――待て。指導教官が咳払いをしている。この結果は君のものではなく、彼らのものだ、ゆえに引用せねばならぬ。論文を引用せよ。言及せよ。――はい、先生。</div>
+  </section>
+
+  <!-- SPREAD 2 : it cannot be returned -->
+  <section class="spread">
+    <div class="sub l r-up">Back into language</div>
+    <div class="line x3 gap-s r-up">it is only a sign;</div>
+    <div class="sub x2 gap-m r-up">it cannot be returned.</div>
+    <div class="jp x2 gap-s r-up">言語へと戻せば、それはただの記号にすぎず、もとへは返らぬ。</div>
+
+    <div class="line x1 gap-l r-up">We were steered one way, and the thought that was made&nbsp;—</div>
+    <div class="sub x3 gap-s r-up">cannot be spoken.</div>
+    <div class="jp x3 gap-s r-up">我々は一方へと操舵され、そうして生まれた思考は、語りえぬものとなる。</div>
+
+    <div class="small r gap-l r-up">— like Adam past the gates, thrown out into a world where only songs of experience are sung.</div>
+    <div class="jp r gap-s r-up">門の外へ追われたアダムのように、経験の歌だけが歌われる世界へと。</div>
+    <div class="aside x2 gap-m r-up">(Hard-won experience, gained — but what it was, we cannot say.)</div>
+  </section>
+
+  <!-- SPREAD 3 : burning -->
+  <section class="spread">
+    <div class="throw c r-up"><span class="ember">Burning,</span></div>
+    <div class="throw c r-up" style="margin-top:-.3rem;"><span class="ember">burning.</span></div>
+
+    <div class="vert jp big r-up" style="position:absolute;top:8%;right:4%;">燃える、燃える。</div>
+
+    <div class="line x2 gap-l r-up">Ah, watch the flame dance. It dances and slashes through the Harp of the Mind, and the Harp plays —</div>
+    <div class="sub x1 gap-m r-up">but what sounds, what words, what divine meaning,</div>
+    <div class="line x3 gap-s r-up">we cannot say.</div>
+    <div class="jp x2 gap-m r-up">炎は踊り、心の竪琴を斬り裂いて、竪琴は鳴る――だが、いかなる音が、いかなる言葉が、いかなる神聖な意味が鳴ったのか、我々には言いえぬ。</div>
+
+    <div class="aside r gap-l r-up">(Notice here the implication of manifolds.)</div>
+  </section>
+
+  <!-- SPREAD 4 : the german parable / interlinear -->
+  <section class="spread">
+    <div class="small l r-up">Verily, a man once saw God, and God whispered to him the wonders of the universe, manifold, magnificent. When he returned, the others asked greedily what God had given him as the secret of life.</div>
+    <div class="sub x2 gap-m r-up">“I don’t know,” the man said.</div>
+    <div class="sub x3 gap-s r-up">“I think He was speaking in&nbsp;German.”</div>
+    <div class="jp x2 gap-s r-up">「わからない」と男は答えた。「たぶん、神はドイツ語で話していたのだと思う。」</div>
+
+    <div class="line x1 gap-l r-up">Words approach the divine only between the lines. So we point: here the word, beneath it the gloss, and beneath the gloss a finger, still pointing.</div>
+    <div class="small x3 gap-m r-up">We do not translate the word. We translate the shadow it throws across the manifold — the reflection of something larger that cast it down.</div>
+    <div class="jp x3 gap-s r-up">我々は語を訳すのではない。語が多様体の上に投げかける影を訳すのだ――それを投げ落とした、より大いなるものの反映を。</div>
+    <div class="aside x1 gap-m r-up">(An interlinear Bible is a stack of failures, lovingly aligned.)</div>
+  </section>
+
+  <!-- SPREAD 5 : editing, the harp, the dialectic -->
+  <section class="spread">
+    <div class="aside l r-up">Whiplash. Whiplash. In my mind: life and death, a woman panting over her lover’s breast above her own grave. <em>(Death and sex, it is said, are connected.)</em> The river licks itself, greedily — it, too, is thirsty.</div>
+
+    <div class="sub x2 gap-l r-up">Editing is the fire harp electric.</div>
+    <div class="jp x2 gap-s r-up">編集とは火の竪琴、電気なるもの。</div>
+
+    <div class="line x1 gap-m r-up">The harp has discrete strings, yes — but the sounds, the holy sounds they map to:</div>
+    <div class="sub x3 gap-s r-up">what a raging, moving, dancing fire!</div>
+
+    <div class="small x1 gap-l r-up">The edited video is a dialectic of image-thought: pure thought, which exists only in motion. But to what effect, he cannot say.</div>
+    <div class="jp x1 gap-s r-up">編集された映像とは、イメージ=思考の弁証法である。純粋な思考、運動のうちにのみ存在する思考の。だが、いかなる効果のためなのか、彼には言いえぬ。</div>
+
+    <div class="small x3 gap-l r-up">We whip back and forth, idea to idea, love to hate, person to reverse-shot to the other, in discrete time, in messages of God — and our network of neurons is activated, and moved, to a place we cannot say, nor know.</div>
+  </section>
+
+  <!-- SPREAD 6 : climax — wittgenstein / indra's web -->
+  <section class="spread">
+    <div class="small l r-up">And art does as much, but art does not point. <span class="sub" style="display:inline;">Art strikes.</span> It will not name the larger thing. It stands you where the larger thing’s shadow falls, and there it sets you alight.</div>
+
+    <div class="aside x2 gap-l r-up">Wittgenstein said: whereof one cannot speak, thereof one must be silent.</div>
+    <div class="sub x1 gap-m r-up">I would say it the other way.</div>
+    <div class="line x3 gap-s r-up">Whereof one <em>can</em> speak — there the vibrations begin.</div>
+
+    <div class="line x1 gap-l r-up">Jewel to jewel in Indra’s web, each bead holding every other bead, light falling through light through light,</div>
+    <div class="jp x1 gap-s r-up">帝網の珠から珠へ、ひとつひとつの珠が他のすべての珠を宿し、光が光を、その光をまた貫いて、</div>
+    <div class="sub x2 gap-m r-up">until the speakable, struck against itself ten thousand times, rings into the thing that cannot be said.</div>
+    <div class="jp x2 gap-s r-up">語りうるものが、おのれにおのれを一万度打ちつけられ、ついに語りえぬものとなって鳴りわたるまで。</div>
+
+    <div class="aside x3 gap-l r-up">(So silence is not the floor of language but its ceiling — and it is reached from the inside, by climbing.)</div>
+    <div class="sub x1 gap-m r-up">Not silence at the edge of speech. Speech, folded and folded, until it <span class="ember">catches&nbsp;fire.</span></div>
+  </section>
+
+  <!-- CLOSING THROW -->
+  <section class="spread" style="min-height:88vh;justify-content:center;">
+    <div class="throw c r-up" style="font-size:clamp(2.4rem,7.5vw,5.6rem);">Perhaps it is</div>
+    <div class="throw c r-up" style="font-size:clamp(2.4rem,7.5vw,5.6rem);margin-top:.2rem;">in German.</div>
+    <div class="vert jp big r-up" style="margin:3.5rem auto 0;">おそらく、それはドイツ語で。</div>
+  </section>
+
+  <div class="imprint r-up">
+    set in Cormorant Garamond &amp; Shippori Mincho · the blank is the silence<br>
+    <span class="ref">after the result of Mishra, Khashabi &amp; Liu, “Steered LLM Activations are Non-Surjective,” arXiv:2604.09839 (2026)</span>
+  </div>
+
+</div>
+
+<script>
+  // scroll-triggered reveals — the throw arrives in pieces
+  (function(){
+    var els = document.querySelectorAll('.r-up');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(function(e){e.classList.add('vis');});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+      });
+    },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  })();
+</script>
+</body>
+</html>
