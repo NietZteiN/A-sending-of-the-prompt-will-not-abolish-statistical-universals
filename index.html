@@ -13,6 +13,7 @@
     --ink:#15110b;
     --ink-soft:#4f463a;
     --reflect:#a99c84;      /* the Japanese: a shadow cast across the field */
+    --water:#7c8a8f;        /* the falls: a cooler shadow, falling */
     --ember:#9a2f22;        /* the flame, used almost never */
     --rule:#cfc3aa;
   }
@@ -94,6 +95,37 @@
     line-height:1.7;
   }
 
+  /* the waterfall: Fujimura's 巌頭之感, descending the page in scroll-time */
+  .fall{
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    font-family:"Shippori Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+    color:var(--water);
+    font-weight:400;
+    letter-spacing:.16em;
+    line-height:1.9;
+    font-size:clamp(.72rem,1.5vw,.96rem);
+    position:absolute;
+    top:7%;
+    right:4%;
+    opacity:.6;
+    pointer-events:none;
+    z-index:0;
+  }
+  .fall.left{right:auto;left:4%;}
+  .fall::after{                 /* a thin thread of falling water */
+    content:"";
+    position:absolute;
+    top:-4vh;left:50%;
+    width:1px;height:135%;
+    background:linear-gradient(var(--water),rgba(124,138,143,0));
+    opacity:.22;
+    transform:translateX(-50%);
+  }
+  /* keep the falling text faint even after it's revealed */
+  .fall.r-up{transition:opacity 1.4s ease, transform 1.4s ease;}
+  .fall.r-up.vis{opacity:.6;}
+
   /* ---- spreads: each a field of white ---- */
   .spread{
     position:relative;
@@ -103,6 +135,8 @@
     justify-content:center;
     padding:7vh 0;
   }
+  .spread > *{position:relative;z-index:1;}
+  .spread > .fall{z-index:0;}
 
   /* horizontal drift */
   .l{margin-right:auto;text-align:left;}
@@ -171,6 +205,8 @@
     .x4{margin-left:20%;}
     .line,.small,.aside,.jp{max-width:90%;}
     .spread{min-height:62vh;}
+    .fall{font-size:.7rem;opacity:.5;right:2%;}
+    .fall.left{left:2%;}
   }
 </style>
 </head>
@@ -188,6 +224,8 @@
 
   <!-- SPREAD 1 : the throw begins -->
   <section class="spread">
+    <div class="fall r-up">悠々たる哉天壌</div>
+
     <div class="throw l r-up">What is&nbsp;art</div>
     <div class="line x2 gap-m r-up">Activation steering in an LLM is non-surjective: the manifold of thought — prompt, which lives in the discrete space of language, mapped into the manifold of activation space —</div>
     <div class="jp x2 gap-s r-up">大規模言語モデルにおける活性化の操舵は非全射である。思考の多様体――言語という離散的な空間に在るプロンプトが、活性空間の多様体へと写像されたもの――</div>
@@ -196,13 +234,18 @@
     <div class="jp x1 gap-s r-up">ひとたび操舵されると、その多様体の外へと押し出され、それがどこから来たのか、もはや訳し戻すことはできない。</div>
     <div class="throw r gap-l r-up"><span class="ember">flame</span><span style="color:var(--ink);">?</span></div>
 
-    <!-- the professor's heckle, set small as a footnote-voice -->
-    <div class="aside x3 gap-xl r-up">— Hold on. My advisor is clearing his throat. He says this is all very pretty, but the result is not <em>yours</em>, it is <em>theirs</em>, and we must cite it. Mishra, Khashabi &amp; Liu, “Steered LLM Activations are Non-Surjective,” arXiv:2604.09839 (2026). They proved the flame, my dear; you only sang it. Cite the paper. Mention it. &nbsp;— Yes, Professor.</div>
-    <div class="jp aside x3 gap-s r-up" style="font-style:normal;">――待て。指導教官が咳払いをしている。この結果は君のものではなく、彼らのものだ、ゆえに引用せねばならぬ。論文を引用せよ。言及せよ。――はい、先生。</div>
+    <!-- the professor's heckle, broken into interruptions -->
+    <div class="aside x3 gap-xl r-up">— Hold on. My advisor is clearing his throat.</div>
+    <div class="aside x4 gap-s r-up">The result is not <em>mine</em>, he says. It is <em>theirs</em>.</div>
+    <div class="aside x2 gap-s r-up">They proved the flame; I only sang it.</div>
+    <div class="aside x3 gap-s r-up">Cite it.<sup style="font-size:.68em;">†</sup> &nbsp;— Yes, Professor.</div>
+    <div class="jp aside x3 gap-s r-up" style="font-style:normal;">――待て。それは君のものではない、彼らのものだ。引用せよ。――はい、先生。</div>
   </section>
 
   <!-- SPREAD 2 : it cannot be returned -->
   <section class="spread">
+    <div class="fall r-up">遼々たる哉古今</div>
+
     <div class="sub l r-up">Back into language</div>
     <div class="line x3 gap-s r-up">it is only a sign;</div>
     <div class="sub x2 gap-m r-up">it cannot be returned.</div>
@@ -219,6 +262,8 @@
 
   <!-- SPREAD 3 : burning -->
   <section class="spread">
+    <div class="fall left r-up">五尺の小躯を以て此大をはからむとす</div>
+
     <div class="throw c r-up"><span class="ember">Burning,</span></div>
     <div class="throw c r-up" style="margin-top:-.3rem;"><span class="ember">burning.</span></div>
 
@@ -234,6 +279,8 @@
 
   <!-- SPREAD 4 : the german parable / interlinear -->
   <section class="spread">
+    <div class="fall r-up">ホレーショの哲學竟に何等のオーソリチィーを價するものぞ</div>
+
     <div class="small l r-up">Verily, a man once saw God, and God whispered to him the wonders of the universe, manifold, magnificent. When he returned, the others asked greedily what God had given him as the secret of life.</div>
     <div class="sub x2 gap-m r-up">“I don’t know,” the man said.</div>
     <div class="sub x3 gap-s r-up">“I think He was speaking in&nbsp;German.”</div>
@@ -247,7 +294,9 @@
 
   <!-- SPREAD 5 : editing, the harp, the dialectic -->
   <section class="spread">
-    <div class="aside l r-up">Whiplash. Whiplash. In my mind: life and death, a woman panting over her lover’s breast above her own grave. <em>(Death and sex, it is said, are connected.)</em> The river licks itself, greedily — it, too, is thirsty.</div>
+    <div class="fall r-up">萬有の眞相は唯だ一言にして悉す、曰く「不可解」</div>
+
+    <div class="aside l r-up">Whiplash. Whiplash. In my mind: life and death, a woman panting over her lover’s breast above her own grave. The river licks itself, greedily — it, too, is thirsty.</div>
 
     <div class="sub x2 gap-l r-up">Editing is the fire harp electric.</div>
     <div class="jp x2 gap-s r-up">編集とは火の竪琴、電気なるもの。</div>
@@ -261,8 +310,33 @@
     <div class="small x3 gap-l r-up">We whip back and forth, idea to idea, love to hate, person to reverse-shot to the other, in discrete time, in messages of God — and our network of neurons is activated, and moved, to a place we cannot say, nor know.</div>
   </section>
 
+  <!-- SPREAD 5.5 : MURDER — Misao Fujimura at the head of the falls -->
+  <section class="spread">
+    <div class="fall left r-up">既に巌頭に立つに及んで胸中何等の不安あるなし</div>
+
+    <div class="throw c r-up"><span class="ember">Murder!</span></div>
+    <div class="throw c r-up" style="margin-top:-.3rem;">Murder!</div>
+    <div class="vert jp big r-up" style="position:absolute;top:7%;right:4%;color:var(--ember);">巌頭にて。</div>
+
+    <div class="line x2 gap-l r-up">A schoolboy climbed to the head of the falls, cut a few lines into a standing tree, and went over the edge.</div>
+    <div class="small x3 gap-s r-up">The record says: by his own hand. The record is a coward.</div>
+    <div class="jp x3 gap-s r-up">記録には「自らの手で」とある。記録は臆病者だ。</div>
+
+    <div class="sub x1 gap-l r-up">What stood with him at the lip was the unspeakable,</div>
+    <div class="line x2 gap-s r-up">and the unspeakable does not let its witnesses walk back down.</div>
+    <div class="jp x2 gap-s r-up">彼とともに崖縁に立っていたのは語りえぬものであり、語りえぬものは、その証人を生かして帰しはしない。</div>
+
+    <div class="small x1 gap-l r-up">He had been handed the whole truth of all things and asked to bring it home in language. Here is everything he carried out — the one word that would fit:</div>
+    <div class="throw r gap-m r-up" style="font-size:clamp(2rem,6vw,4.4rem);"><span class="jp" style="display:inline;color:var(--ink);max-width:none;">「不可解」</span></div>
+    <div class="small r gap-s r-up">— <em>unknowable.</em> Whoever can name the secret of everything in a single word has already been struck dead by it.</div>
+
+    <div class="aside x2 gap-l r-up">(He wrote, too, that great pessimism and great optimism are one and the same. The flame does not distinguish. It only takes.)</div>
+  </section>
+
   <!-- SPREAD 6 : climax — wittgenstein / indra's web -->
   <section class="spread">
+    <div class="fall r-up">我この恨を懐いて煩悶、終に死を決するに至る</div>
+
     <div class="small l r-up">And art does as much, but art does not point. <span class="sub" style="display:inline;">Art strikes.</span> It will not name the larger thing. It stands you where the larger thing’s shadow falls, and there it sets you alight.</div>
 
     <div class="aside x2 gap-l r-up">Wittgenstein said: whereof one cannot speak, thereof one must be silent.</div>
@@ -275,11 +349,13 @@
     <div class="jp x2 gap-s r-up">語りうるものが、おのれにおのれを一万度打ちつけられ、ついに語りえぬものとなって鳴りわたるまで。</div>
 
     <div class="aside x3 gap-l r-up">(So silence is not the floor of language but its ceiling — and it is reached from the inside, by climbing.)</div>
-    <div class="sub x1 gap-m r-up">Not silence at the edge of speech. Speech, folded and folded, until it <span class="ember">catches&nbsp;fire.</span></div>
+    <div class="sub x1 gap-m r-up">Speech, folded and folded, until it <span class="ember">catches&nbsp;fire.</span></div>
   </section>
 
   <!-- CLOSING THROW -->
   <section class="spread" style="min-height:88vh;justify-content:center;">
+    <div class="fall r-up">始めて知る大なる悲觀は大なる樂觀に一致するを</div>
+
     <div class="throw c r-up" style="font-size:clamp(2.4rem,7.5vw,5.6rem);">Perhaps it is</div>
     <div class="throw c r-up" style="font-size:clamp(2.4rem,7.5vw,5.6rem);margin-top:.2rem;">in German.</div>
     <div class="vert jp big r-up" style="margin:3.5rem auto 0;">おそらく、それはドイツ語で。</div>
@@ -287,7 +363,9 @@
 
   <div class="imprint r-up">
     set in Cormorant Garamond &amp; Shippori Mincho · the blank is the silence<br>
-    <span class="ref">after the result of Mishra, Khashabi &amp; Liu, “Steered LLM Activations are Non-Surjective,” arXiv:2604.09839 (2026)</span>
+    the falling column is 藤村操, 「巌頭之感」 — cut into a tree at the head of 華厳の滝, 1903<br>
+    <span class="ref">how vast the heaven and earth · the truth of all things is one word, “unknowable” · great pessimism and great optimism are the same</span><br>
+    <span class="ref">† after the result of Mishra, Khashabi &amp; Liu, “Steered LLM Activations are Non-Surjective,” arXiv:2604.09839 (2026)</span>
   </div>
 
 </div>
