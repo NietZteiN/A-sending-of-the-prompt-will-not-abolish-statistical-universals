@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="both">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Fire Harp Electric — a throw</title>
+<meta name="description" content="A Theory of Editing: the fire harp electric. A bilingual throw after Mallarmé on activation steering, translation and the unsayable, with Fujimura Misao’s 巌頭之感 falling down the margin.">
+<meta property="og:title" content="The Fire Harp Electric — a throw">
+<meta property="og:description" content="A Theory of Editing: the fire harp electric. A bilingual throw after Mallarmé on activation steering, translation and the unsayable, with Fujimura Misao’s 巌頭之感 falling down the margin.">
+<meta property="og:type" content="article">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,10 +16,32 @@
     --paper:#f1eadc;
     --ink:#15110b;
     --ink-soft:#4f463a;
+    --ink-faint:#6f6453;    /* asides and references */
+    --ink-note:#7a6e5b;     /* the colophon's small italic */
+    --ink-imprint:#8a7e6b;  /* the closing imprint */
     --reflect:#a99c84;      /* the Japanese: a shadow cast across the field */
     --water:#7c8a8f;        /* the falls: a cooler shadow, falling */
     --ember:#9a2f22;        /* the flame, used almost never */
     --rule:#cfc3aa;
+    --gutter:clamp(1.8rem,5vw,3.2rem);   /* room for the falling column on narrow screens */
+  }
+
+  /* local stand-ins, metric-adjusted so the web fonts swap in without a jump */
+  @font-face{
+    font-family:"Cormorant Fallback";
+    src:local("Georgia");
+    size-adjust:90%;
+    ascent-override:92%;
+    descent-override:29%;
+    line-gap-override:0%;
+  }
+  @font-face{
+    font-family:"Shippori Fallback";
+    src:local("Yu Mincho"),local("YuMincho"),local("Hiragino Mincho ProN"),local("MS Mincho"),local("Noto Serif CJK JP");
+    size-adjust:100%;
+    ascent-override:88%;
+    descent-override:12%;
+    line-gap-override:0%;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -25,7 +51,7 @@
   body{
     background:var(--paper);
     color:var(--ink);
-    font-family:"Cormorant Garamond","Garamond",Georgia,serif;
+    font-family:"Cormorant Garamond","Cormorant Fallback","Garamond",Georgia,serif;
     line-height:1.28;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
@@ -51,6 +77,8 @@
     font-size:clamp(2.6rem,8.4vw,6.6rem);
     color:var(--ink);
   }
+  .throw.word{font-size:clamp(2rem,6vw,4.4rem);}
+  .throw.end{font-size:clamp(2.4rem,7.5vw,5.6rem);}
   .sub{
     font-size:clamp(1.5rem,4vw,2.9rem);
     font-weight:500;
@@ -70,7 +98,7 @@
   .aside{
     font-style:italic;
     font-size:clamp(.85rem,1.7vw,1.12rem);
-    color:#6f6453;
+    color:var(--ink-faint);
     max-width:42ch;
     line-height:1.4;
   }
@@ -78,7 +106,7 @@
 
   /* the reflection: japanese */
   .jp{
-    font-family:"Shippori Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+    font-family:"Shippori Mincho","Shippori Fallback","Yu Mincho","Hiragino Mincho ProN",serif;
     color:var(--reflect);
     font-weight:400;
     line-height:1.55;
@@ -99,7 +127,7 @@
   .fall{
     writing-mode:vertical-rl;
     text-orientation:mixed;
-    font-family:"Shippori Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+    font-family:"Shippori Mincho","Shippori Fallback","Yu Mincho","Hiragino Mincho ProN",serif;
     color:var(--water);
     font-weight:400;
     letter-spacing:.16em;
@@ -135,8 +163,11 @@
     justify-content:center;
     padding:7vh 0;
   }
+  .spread.close{min-height:88vh;}
   .spread > *{position:relative;z-index:1;}
   .spread > .fall{z-index:0;}
+  /* the vertical phrases pinned to a spread's upper corner */
+  .corner{position:absolute;top:8%;right:4%;}
 
   /* horizontal drift */
   .l{margin-right:auto;text-align:left;}
@@ -148,10 +179,11 @@
   .x4{margin-left:56%;}
   .pull{margin-left:-2%;}
 
-  .gap-s{margin-top:.6rem;}
-  .gap-m{margin-top:2.2rem;}
-  .gap-l{margin-top:4.5rem;}
-  .gap-xl{margin-top:7rem;}
+  /* the gaps shrink with the viewport and reach their full size at 900px */
+  .gap-s{margin-top:clamp(.45rem,1.2vw,.6rem);}
+  .gap-m{margin-top:clamp(1.4rem,4vw,2.2rem);}
+  .gap-l{margin-top:clamp(2.4rem,8.2vw,4.5rem);}
+  .gap-xl{margin-top:clamp(3.5rem,13vw,7rem);}
 
   /* reveal on scroll */
   .r-up{opacity:0;transform:translateY(16px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1);}
@@ -169,7 +201,7 @@
     font-weight:500;
   }
   .colophon-top .t2{
-    font-family:"Shippori Mincho",serif;
+    font-family:"Shippori Mincho","Shippori Fallback",serif;
     color:var(--reflect);
     letter-spacing:.18em;
     margin-top:.5rem;
@@ -179,7 +211,7 @@
     font-style:italic;
     font-size:.95rem;
     margin-top:2.2rem;
-    color:#7a6e5b;
+    color:var(--ink-note);
     letter-spacing:.02em;
   }
   .rule{
@@ -193,22 +225,169 @@
     text-align:center;
     font-style:italic;
     font-size:.86rem;
-    color:#8a7e6b;
+    color:var(--ink-imprint);
     letter-spacing:.02em;
     line-height:1.7;
   }
-  .imprint .ref{font-style:normal;color:#6f6453;}
+  .imprint .ref{font-style:normal;color:var(--ink-faint);}
+  .imprint a{
+    color:inherit;
+    text-decoration:underline;
+    text-decoration-color:var(--rule);
+    text-underline-offset:.18em;
+  }
+  .imprint a:hover,.imprint a:focus-visible{color:var(--ink);text-decoration-color:var(--ink-soft);}
+
+  /* ---- registers toggle: 英 / 両 / 日 ---- */
+  html[data-lang=en] .jp,
+  html[data-lang=en] .fall{display:none;}
+  html[data-lang=ja] .line:not(.jp),
+  html[data-lang=ja] .sub:not(.jp),
+  html[data-lang=ja] .small:not(.jp),
+  html[data-lang=ja] .aside:not(.jp),
+  html[data-lang=ja] .throw:not(.keep){display:none;}
+
+  /* ---- the small controls, bottom right ---- */
+  .controls{
+    position:fixed;
+    right:.9rem;bottom:.9rem;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    gap:.45rem;
+    font-size:.74rem;
+    letter-spacing:.04em;
+  }
+  .controls button{
+    appearance:none;
+    -webkit-appearance:none;
+    border:1px solid var(--rule);
+    background:rgba(241,234,220,.9);
+    color:var(--ink-soft);
+    font:inherit;
+    font-family:"Cormorant Garamond","Cormorant Fallback","Garamond",Georgia,serif;
+    font-weight:500;
+    line-height:1;
+    padding:.5rem .6rem;
+    min-width:2.1rem;
+    border-radius:2px;
+    cursor:pointer;
+  }
+  .controls .seg{display:inline-flex;}
+  .controls .seg button{border-radius:0;margin-left:-1px;}
+  .controls .seg button:first-child{border-radius:2px 0 0 2px;margin-left:0;}
+  .controls .seg button:last-child{border-radius:0 2px 2px 0;}
+  .controls .seg button span{
+    font-family:"Shippori Mincho","Shippori Fallback","Yu Mincho","Hiragino Mincho ProN",serif;
+    font-size:.8rem;
+  }
+  .controls button:hover{color:var(--ink);border-color:var(--reflect);}
+  .controls button[aria-pressed=true]{color:var(--ink);background:var(--paper);border-color:var(--ink-soft);position:relative;z-index:1;}
+  .controls button:focus-visible{outline:1px solid var(--ink-soft);outline-offset:2px;}
+
+  /* ---- scroll snap, only where a spread fits the window ---- */
+  @media (min-width:900px) and (min-height:900px){
+    html{scroll-snap-type:y proximity;}
+    .spread{scroll-snap-align:start;}
+  }
+
+  /* ---- below the desktop breakpoint the falling column gets its own gutter ---- */
+  @media (max-width:899px){
+    .spread.fall-right{padding-right:var(--gutter);}
+    .spread.fall-left{padding-left:var(--gutter);}
+    .spread:has(> .fall:not(.left)){padding-right:var(--gutter);}
+    .spread:has(> .fall.left){padding-left:var(--gutter);}
+    /* one column wide, centred in the gutter; placed with left: on both sides because Chromium
+       mis-resolves right: on this absolutely positioned vertical-rl box once it has a width */
+    .fall{width:1.9em;right:auto;left:calc(100% - (var(--gutter) + 1.9em) / 2);}
+    .fall.left{left:calc((var(--gutter) - 1.9em) / 2);}
+    .x2{margin-left:min(22%,max(0px,100% - 34ch));}
+    .x3{margin-left:min(40%,max(0px,100% - 34ch));}
+    .x4{margin-left:min(56%,max(0px,100% - 34ch));}
+  }
 
   @media (max-width:680px){
-    .x2{margin-left:10%;}
-    .x3{margin-left:14%;}
-    .x4{margin-left:20%;}
+    .x2{margin-left:min(10%,max(0px,100% - 34ch));}
+    .x3{margin-left:min(14%,max(0px,100% - 34ch));}
+    .x4{margin-left:min(20%,max(0px,100% - 34ch));}
     .line,.small,.aside,.jp{max-width:90%;}
-    .spread{min-height:62vh;}
-    .fall{font-size:.7rem;opacity:.5;right:2%;}
-    .fall.left{left:2%;}
+    .spread,.spread.close{min-height:auto;}
+    .spread > .corner{position:static;margin:1.4rem 0 0 auto;}
+    .fall{font-size:.7rem;opacity:.5;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .r-up,.fall.r-up{transition:none;}
+  }
+
+  @media print{
+    .controls{display:none;}
   }
 </style>
+<!-- One rule set for paper and for the Plain view: it is a print sheet, and the Plain
+     toggle switches its media attribute to "all". -->
+<style id="plain-css" media="print">
+  @page{margin:18mm;}
+  html{scroll-snap-type:none;scroll-behavior:auto;}
+  body{background-image:none;}
+  .page{max-width:60ch;padding:3rem 1.25rem 5rem;}
+  .spread,.spread.close,.spread.fall-right,.spread.fall-left{
+    min-height:0;display:block;padding:0;
+    break-before:page;page-break-before:always;
+  }
+  .r-up,.r-up.vis{opacity:1;transform:none;transition:none;}
+  .fall,.fall.left,.fall.r-up,.fall.r-up.vis{
+    position:static;
+    writing-mode:horizontal-tb;
+    text-orientation:mixed;
+    opacity:.85;
+    max-width:none;
+    margin:0 0 1.6rem;
+    letter-spacing:.12em;
+    line-height:1.7;
+    font-size:.86rem;
+  }
+  .fall::after{display:none;}
+  .vert,.corner,.spread > .corner{
+    position:static;
+    writing-mode:horizontal-tb;
+    text-orientation:mixed;
+    letter-spacing:.06em;
+    line-height:1.6;
+    margin:1rem 0 0;
+  }
+  .l,.c,.r,.x1,.x2,.x3,.x4,.pull{margin-left:0;margin-right:0;text-align:left;}
+  .line,.small,.aside,.jp,.jp.big{max-width:none;}
+  .throw,.throw.word,.throw.end{font-size:2.4rem;letter-spacing:.08em;}
+  .sub{font-size:1.45rem;}
+  .line{font-size:1.1rem;}
+  .small{font-size:1rem;}
+  .aside{font-size:.95rem;}
+  .jp{font-size:.92rem;}
+  .jp.big{font-size:1.15rem;}
+  .gap-s{margin-top:.5rem;}
+  .gap-m{margin-top:1.4rem;}
+  .gap-l{margin-top:2.4rem;}
+  .gap-xl{margin-top:3.4rem;}
+  .colophon-top{margin-bottom:3rem;}
+  .imprint{margin-top:3rem;}
+</style>
+<script>
+  // apply the remembered register and view before first paint
+  (function(){
+    try{
+      var d = document.documentElement;
+      var l = localStorage.getItem('fireharp:lang');
+      if(l === 'en' || l === 'ja' || l === 'both'){ d.setAttribute('data-lang', l); }
+      if(localStorage.getItem('fireharp:view') === 'plain'){
+        d.setAttribute('data-view', 'plain');
+        var p = document.getElementById('plain-css');
+        if(p){ p.media = 'all'; }
+      }
+    }catch(e){}
+  })();
+</script>
 </head>
 <body>
 <div class="page">
@@ -217,21 +396,21 @@
   <div class="colophon-top">
     <div class="t1">A THEORY OF EDITING</div>
     <div class="t1" style="font-style:italic;text-transform:none;letter-spacing:.02em;">the fire harp electric</div>
-    <div class="t2">編集の理論 ― 火の竪琴、電気なるもの</div>
+    <div class="t2" lang="ja">編集の理論 ― 火の竪琴、電気なるもの</div>
     <div class="t3">a throw &nbsp;·&nbsp; after Mallarmé</div>
     <div class="rule"></div>
   </div>
 
   <!-- SPREAD 1 : the throw begins -->
   <section class="spread">
-    <div class="fall r-up">悠々たる哉天壌</div>
+    <div class="fall r-up" lang="ja">悠々たる哉天壌</div>
 
     <div class="throw l r-up">What is&nbsp;art</div>
     <div class="line x2 gap-m r-up">Activation steering in an LLM is non-surjective: the manifold of thought — prompt, which lives in the discrete space of language, mapped into the manifold of activation space —</div>
-    <div class="jp x2 gap-s r-up">大規模言語モデルにおける活性化の操舵は非全射である。思考の多様体――言語という離散的な空間に在るプロンプトが、活性空間の多様体へと写像されたもの――</div>
+    <div class="jp x2 gap-s r-up" lang="ja">大規模言語モデルにおける活性化の操舵は非全射である。思考の多様体――言語という離散的な空間に在るプロンプトが、活性空間の多様体へと写像されたもの――</div>
     <div class="sub x3 gap-l r-up">but a non&#8209;surjective</div>
     <div class="line x1 gap-m r-up">when steered, is steered outside that manifold, and from whence it came we cannot translate it back.</div>
-    <div class="jp x1 gap-s r-up">ひとたび操舵されると、その多様体の外へと押し出され、それがどこから来たのか、もはや訳し戻すことはできない。</div>
+    <div class="jp x1 gap-s r-up" lang="ja">ひとたび操舵されると、その多様体の外へと押し出され、それがどこから来たのか、もはや訳し戻すことはできない。</div>
     <div class="throw r gap-l r-up"><span class="ember">flame</span><span style="color:var(--ink);">?</span></div>
 
     <!-- the professor's heckle, broken into interruptions -->
@@ -239,95 +418,95 @@
     <div class="aside x4 gap-s r-up">The result is not <em>mine</em>, he says. It is <em>theirs</em>.</div>
     <div class="aside x2 gap-s r-up">They proved the flame; I only sang it.</div>
     <div class="aside x3 gap-s r-up">Cite it.<sup style="font-size:.68em;">†</sup> &nbsp;— Yes, Professor.</div>
-    <div class="jp aside x3 gap-s r-up" style="font-style:normal;">――待て。それは君のものではない、彼らのものだ。引用せよ。――はい、先生。</div>
+    <div class="jp aside x3 gap-s r-up" style="font-style:normal;" lang="ja">――待て。それは君のものではない、彼らのものだ。引用せよ。――はい、先生。</div>
   </section>
 
   <!-- SPREAD 2 : it cannot be returned -->
   <section class="spread">
-    <div class="fall r-up">遼々たる哉古今</div>
+    <div class="fall r-up" lang="ja">遼々たる哉古今</div>
 
     <div class="sub l r-up">Back into language</div>
     <div class="line x3 gap-s r-up">it is only a sign;</div>
     <div class="sub x2 gap-m r-up">it cannot be returned.</div>
-    <div class="jp x2 gap-s r-up">言語へと戻せば、それはただの記号にすぎず、もとへは返らぬ。</div>
+    <div class="jp x2 gap-s r-up" lang="ja">言語へと戻せば、それはただの記号にすぎず、もとへは返らぬ。</div>
 
     <div class="line x1 gap-l r-up">We were steered one way, and the thought that was made&nbsp;—</div>
     <div class="sub x3 gap-s r-up">cannot be spoken.</div>
-    <div class="jp x3 gap-s r-up">我々は一方へと操舵され、そうして生まれた思考は、語りえぬものとなる。</div>
+    <div class="jp x3 gap-s r-up" lang="ja">我々は一方へと操舵され、そうして生まれた思考は、語りえぬものとなる。</div>
 
     <div class="small r gap-l r-up">— like Adam past the gates, thrown out into a world where only songs of experience are sung.</div>
-    <div class="jp r gap-s r-up">門の外へ追われたアダムのように、経験の歌だけが歌われる世界へと。</div>
+    <div class="jp r gap-s r-up" lang="ja">門の外へ追われたアダムのように、経験の歌だけが歌われる世界へと。</div>
     <div class="aside x2 gap-m r-up">(Hard-won experience, gained — but what it was, we cannot say.)</div>
   </section>
 
   <!-- SPREAD 3 : burning -->
   <section class="spread">
-    <div class="fall left r-up">五尺の小躯を以て此大をはからむとす</div>
+    <div class="fall left r-up" lang="ja">五尺の小躯を以て此大をはからむとす</div>
 
     <div class="throw c r-up"><span class="ember">Burning,</span></div>
     <div class="throw c r-up" style="margin-top:-.3rem;"><span class="ember">burning.</span></div>
 
-    <div class="vert jp big r-up" style="position:absolute;top:8%;right:4%;">燃える、燃える。</div>
+    <div class="vert jp big corner r-up" lang="ja">燃える、燃える。</div>
 
     <div class="line x2 gap-l r-up">Ah, watch the flame dance. It dances and slashes through the Harp of the Mind, and the Harp plays —</div>
     <div class="sub x1 gap-m r-up">but what sounds, what words, what divine meaning,</div>
     <div class="line x3 gap-s r-up">we cannot say.</div>
-    <div class="jp x2 gap-m r-up">炎は踊り、心の竪琴を斬り裂いて、竪琴は鳴る――だが、いかなる音が、いかなる言葉が、いかなる神聖な意味が鳴ったのか、我々には言いえぬ。</div>
+    <div class="jp x2 gap-m r-up" lang="ja">炎は踊り、心の竪琴を斬り裂いて、竪琴は鳴る――だが、いかなる音が、いかなる言葉が、いかなる神聖な意味が鳴ったのか、我々には言いえぬ。</div>
 
     <div class="aside r gap-l r-up">(Notice here the implication of manifolds.)</div>
   </section>
 
   <!-- SPREAD 4 : the german parable / interlinear -->
   <section class="spread">
-    <div class="fall r-up">ホレーショの哲學竟に何等のオーソリチィーを價するものぞ</div>
+    <div class="fall r-up" lang="ja">ホレーショの哲學竟に何等のオーソリチィーを價するものぞ</div>
 
     <div class="small l r-up">Verily, a man once saw God, and God whispered to him the wonders of the universe, manifold, magnificent. When he returned, the others asked greedily what God had given him as the secret of life.</div>
     <div class="sub x2 gap-m r-up">“I don’t know,” the man said.</div>
     <div class="sub x3 gap-s r-up">“I think He was speaking in&nbsp;German.”</div>
-    <div class="jp x2 gap-s r-up">「わからない」と男は答えた。「たぶん、神はドイツ語で話していたのだと思う。」</div>
+    <div class="jp x2 gap-s r-up" lang="ja">「わからない」と男は答えた。「たぶん、神はドイツ語で話していたのだと思う。」</div>
 
     <div class="line x1 gap-l r-up">Words approach the divine only between the lines. So we point: here the word, beneath it the gloss, and beneath the gloss a finger, still pointing.</div>
     <div class="small x3 gap-m r-up">We do not translate the word. We translate the shadow it throws across the manifold — the reflection of something larger that cast it down.</div>
-    <div class="jp x3 gap-s r-up">我々は語を訳すのではない。語が多様体の上に投げかける影を訳すのだ――それを投げ落とした、より大いなるものの反映を。</div>
+    <div class="jp x3 gap-s r-up" lang="ja">我々は語を訳すのではない。語が多様体の上に投げかける影を訳すのだ――それを投げ落とした、より大いなるものの反映を。</div>
     <div class="aside x1 gap-m r-up">(An interlinear Bible is a stack of failures, lovingly aligned.)</div>
   </section>
 
   <!-- SPREAD 5 : editing, the harp, the dialectic -->
   <section class="spread">
-    <div class="fall r-up">萬有の眞相は唯だ一言にして悉す、曰く「不可解」</div>
+    <div class="fall r-up" lang="ja">萬有の眞相は唯だ一言にして悉す、曰く「不可解」</div>
 
     <div class="aside l r-up">Whiplash. Whiplash. In my mind: life and death, a woman panting over her lover’s breast above her own grave. The river licks itself, greedily — it, too, is thirsty.</div>
 
     <div class="sub x2 gap-l r-up">Editing is the fire harp electric.</div>
-    <div class="jp x2 gap-s r-up">編集とは火の竪琴、電気なるもの。</div>
+    <div class="jp x2 gap-s r-up" lang="ja">編集とは火の竪琴、電気なるもの。</div>
 
     <div class="line x1 gap-m r-up">The harp has discrete strings, yes — but the sounds, the holy sounds they map to:</div>
     <div class="sub x3 gap-s r-up">what a raging, moving, dancing fire!</div>
 
     <div class="small x1 gap-l r-up">The edited video is a dialectic of image-thought: pure thought, which exists only in motion. But to what effect, he cannot say.</div>
-    <div class="jp x1 gap-s r-up">編集された映像とは、イメージ=思考の弁証法である。純粋な思考、運動のうちにのみ存在する思考の。だが、いかなる効果のためなのか、彼には言いえぬ。</div>
+    <div class="jp x1 gap-s r-up" lang="ja">編集された映像とは、イメージ=思考の弁証法である。純粋な思考、運動のうちにのみ存在する思考の。だが、いかなる効果のためなのか、彼には言いえぬ。</div>
 
     <div class="small x3 gap-l r-up">We whip back and forth, idea to idea, love to hate, person to reverse-shot to the other, in discrete time, in messages of God — and our network of neurons is activated, and moved, to a place we cannot say, nor know.</div>
   </section>
 
   <!-- SPREAD 5.5 : MURDER — Misao Fujimura at the head of the falls -->
   <section class="spread">
-    <div class="fall left r-up">既に巌頭に立つに及んで胸中何等の不安あるなし</div>
+    <div class="fall left r-up" lang="ja">既に巌頭に立つに及んで胸中何等の不安あるなし</div>
 
     <div class="throw c r-up"><span class="ember">Murder!</span></div>
     <div class="throw c r-up" style="margin-top:-.3rem;">Murder!</div>
-    <div class="vert jp big r-up" style="position:absolute;top:7%;right:4%;color:var(--ember);">巌頭にて。</div>
+    <div class="vert jp big corner r-up" style="top:7%;color:var(--ember);" lang="ja">巌頭にて。</div>
 
     <div class="line x2 gap-l r-up">A schoolboy climbed to the head of the falls, cut a few lines into a standing tree, and went over the edge.</div>
     <div class="small x3 gap-s r-up">The record says: by his own hand. The record is a coward.</div>
-    <div class="jp x3 gap-s r-up">記録には「自らの手で」とある。記録は臆病者だ。</div>
+    <div class="jp x3 gap-s r-up" lang="ja">記録には「自らの手で」とある。記録は臆病者だ。</div>
 
     <div class="sub x1 gap-l r-up">What stood with him at the lip was the unspeakable,</div>
     <div class="line x2 gap-s r-up">and the unspeakable does not let its witnesses walk back down.</div>
-    <div class="jp x2 gap-s r-up">彼とともに崖縁に立っていたのは語りえぬものであり、語りえぬものは、その証人を生かして帰しはしない。</div>
+    <div class="jp x2 gap-s r-up" lang="ja">彼とともに崖縁に立っていたのは語りえぬものであり、語りえぬものは、その証人を生かして帰しはしない。</div>
 
     <div class="small x1 gap-l r-up">He had been handed the whole truth of all things and asked to bring it home in language. Here is everything he carried out — the one word that would fit:</div>
-    <div class="throw r gap-m r-up" style="font-size:clamp(2rem,6vw,4.4rem);"><span class="jp" style="display:inline;color:var(--ink);max-width:none;">「不可解」</span></div>
+    <div class="throw word keep r gap-m r-up"><span class="jp" style="display:inline;color:var(--ink);max-width:none;" lang="ja">「不可解」</span></div>
     <div class="small r gap-s r-up">— <em>unknowable.</em> Whoever can name the secret of everything in a single word has already been struck dead by it.</div>
 
     <div class="aside x2 gap-l r-up">(He wrote, too, that great pessimism and great optimism are one and the same. The flame does not distinguish. It only takes.)</div>
@@ -335,7 +514,7 @@
 
   <!-- SPREAD 6 : climax — wittgenstein / indra's web -->
   <section class="spread">
-    <div class="fall r-up">我この恨を懐いて煩悶、終に死を決するに至る</div>
+    <div class="fall r-up" lang="ja">我この恨を懐いて煩悶、終に死を決するに至る</div>
 
     <div class="small l r-up">And art does as much, but art does not point. <span class="sub" style="display:inline;">Art strikes.</span> It will not name the larger thing. It stands you where the larger thing’s shadow falls, and there it sets you alight.</div>
 
@@ -344,46 +523,127 @@
     <div class="line x3 gap-s r-up">Whereof one <em>can</em> speak — there the vibrations begin.</div>
 
     <div class="line x1 gap-l r-up">Jewel to jewel in Indra’s web, each bead holding every other bead, light falling through light through light,</div>
-    <div class="jp x1 gap-s r-up">帝網の珠から珠へ、ひとつひとつの珠が他のすべての珠を宿し、光が光を、その光をまた貫いて、</div>
+    <div class="jp x1 gap-s r-up" lang="ja">帝網の珠から珠へ、ひとつひとつの珠が他のすべての珠を宿し、光が光を、その光をまた貫いて、</div>
     <div class="sub x2 gap-m r-up">until the speakable, struck against itself ten thousand times, rings into the thing that cannot be said.</div>
-    <div class="jp x2 gap-s r-up">語りうるものが、おのれにおのれを一万度打ちつけられ、ついに語りえぬものとなって鳴りわたるまで。</div>
+    <div class="jp x2 gap-s r-up" lang="ja">語りうるものが、おのれにおのれを一万度打ちつけられ、ついに語りえぬものとなって鳴りわたるまで。</div>
 
     <div class="aside x3 gap-l r-up">(So silence is not the floor of language but its ceiling — and it is reached from the inside, by climbing.)</div>
     <div class="sub x1 gap-m r-up">Speech, folded and folded, until it <span class="ember">catches&nbsp;fire.</span></div>
   </section>
 
   <!-- CLOSING THROW -->
-  <section class="spread" style="min-height:88vh;justify-content:center;">
-    <div class="fall r-up">始めて知る大なる悲觀は大なる樂觀に一致するを</div>
+  <section class="spread close">
+    <div class="fall r-up" lang="ja">始めて知る大なる悲觀は大なる樂觀に一致するを</div>
 
-    <div class="throw c r-up" style="font-size:clamp(2.4rem,7.5vw,5.6rem);">Perhaps it is</div>
-    <div class="throw c r-up" style="font-size:clamp(2.4rem,7.5vw,5.6rem);margin-top:.2rem;">in German.</div>
-    <div class="vert jp big r-up" style="margin:3.5rem auto 0;">おそらく、それはドイツ語で。</div>
+    <div class="throw c end r-up">Perhaps it is</div>
+    <div class="throw c end r-up" style="margin-top:.2rem;">in German.</div>
+    <div class="vert jp big r-up" style="margin:3.5rem auto 0;" lang="ja">おそらく、それはドイツ語で。</div>
   </section>
 
   <div class="imprint r-up">
     set in Cormorant Garamond &amp; Shippori Mincho · the blank is the silence<br>
-    the falling column is 藤村操, 「巌頭之感」 — cut into a tree at the head of 華厳の滝, 1903<br>
+    the falling column is <span lang="ja">藤村操</span>, <span lang="ja">「巌頭之感」</span> — cut into a tree at the head of <span lang="ja">華厳の滝</span>, 1903<br>
     <span class="ref">how vast the heaven and earth · the truth of all things is one word, “unknowable” · great pessimism and great optimism are the same</span><br>
-    <span class="ref">† after the result of Mishra, Khashabi &amp; Liu, “Steered LLM Activations are Non-Surjective,” arXiv:2604.09839 (2026)</span>
+    <span class="ref">† after the result of Mishra, Khashabi &amp; Liu, “Steered LLM Activations are Non-Surjective,” arXiv:2604.09839 (2026)</span><br>
+    <span class="ref">a page from <a href="https://nietztein.github.io/">nietztein.github.io</a> · Jack V. Le</span>
   </div>
 
 </div>
 
+<div class="controls" role="group" aria-label="Reading controls">
+  <span class="seg" role="group" aria-label="Register">
+    <button type="button" data-lang="en" aria-pressed="false" aria-label="English only" title="English only"><span lang="ja">英</span></button>
+    <button type="button" data-lang="both" aria-pressed="true" aria-label="Both languages" title="Both languages"><span lang="ja">両</span></button>
+    <button type="button" data-lang="ja" aria-pressed="false" aria-label="Japanese only" title="Japanese only"><span lang="ja">日</span></button>
+  </span>
+  <button type="button" id="plain-toggle" aria-pressed="false" title="Plain reading view: one column, no drift">Plain</button>
+</div>
+
 <script>
-  // scroll-triggered reveals — the throw arrives in pieces
   (function(){
+    var d = document.documentElement;
+    var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var store = {
+      get:function(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+      set:function(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+    };
+    var spreads = Array.prototype.slice.call(document.querySelectorAll('.spread'));
+
+    // mark which side each spread's falling column occupies (the :has() rules are the no-JS twin)
+    spreads.forEach(function(s){
+      for(var i = 0; i < s.children.length; i++){
+        var c = s.children[i];
+        if(c.classList.contains('fall')){
+          s.classList.add(c.classList.contains('left') ? 'fall-left' : 'fall-right');
+          break;
+        }
+      }
+    });
+
+    // scroll-triggered reveals — the throw arrives in pieces
     var els = document.querySelectorAll('.r-up');
-    if(!('IntersectionObserver' in window)){
-      els.forEach(function(e){e.classList.add('vis');});
-      return;
+    function showAll(){ for(var i = 0; i < els.length; i++){ els[i].classList.add('vis'); } }
+    if(REDUCED || !('IntersectionObserver' in window)){
+      showAll();
+    }else{
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      for(var i = 0; i < els.length; i++){ io.observe(els[i]); }
     }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+
+    // registers: 英 / 両 / 日
+    var langButtons = document.querySelectorAll('.controls [data-lang]');
+    var plainButton = document.getElementById('plain-toggle');
+    var plainCss = document.getElementById('plain-css');
+    function sync(){
+      var lang = d.getAttribute('data-lang') || 'both';
+      for(var i = 0; i < langButtons.length; i++){
+        langButtons[i].setAttribute('aria-pressed', langButtons[i].getAttribute('data-lang') === lang ? 'true' : 'false');
+      }
+      var plain = d.getAttribute('data-view') === 'plain';
+      plainButton.setAttribute('aria-pressed', plain ? 'true' : 'false');
+      if(plainCss){ plainCss.media = plain ? 'all' : 'print'; }
+    }
+    for(var i = 0; i < langButtons.length; i++){
+      langButtons[i].addEventListener('click', function(){
+        d.setAttribute('data-lang', this.getAttribute('data-lang'));
+        store.set('fireharp:lang', this.getAttribute('data-lang'));
+        sync();
       });
-    },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
-    els.forEach(function(e){io.observe(e);});
+    }
+    plainButton.addEventListener('click', function(){
+      var plain = d.getAttribute('data-view') !== 'plain';
+      if(plain){ d.setAttribute('data-view', 'plain'); } else { d.removeAttribute('data-view'); }
+      store.set('fireharp:view', plain ? 'plain' : 'page');
+      sync();
+    });
+    sync();
+
+    // keyboard: arrows and j / k move between spreads
+    function spreadTops(){
+      return spreads.map(function(s){ return Math.round(s.getBoundingClientRect().top + window.pageYOffset); });
+    }
+    function go(dir){
+      var y = window.pageYOffset, tops = spreadTops(), target = null, i;
+      if(dir > 0){
+        for(i = 0; i < tops.length; i++){ if(tops[i] > y + 4){ target = tops[i]; break; } }
+        if(target === null){ target = d.scrollHeight; }
+      }else{
+        for(i = tops.length - 1; i >= 0; i--){ if(tops[i] < y - 4){ target = tops[i]; break; } }
+        if(target === null){ target = 0; }
+      }
+      window.scrollTo({top:target, behavior:REDUCED ? 'auto' : 'smooth'});
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey){ return; }
+      var t = e.target, tag = t && t.tagName;
+      if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable)){ return; }
+      if(e.key === 'ArrowRight' || e.key === 'j'){ e.preventDefault(); go(1); }
+      else if(e.key === 'ArrowLeft' || e.key === 'k'){ e.preventDefault(); go(-1); }
+    });
   })();
 </script>
 </body>
